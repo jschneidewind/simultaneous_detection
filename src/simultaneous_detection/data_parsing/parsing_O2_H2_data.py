@@ -2,15 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import pprint as pp
-from scipy.signal import savgol_filter
 
 from pyKES.database.data_processing import read_in_experiments_multiprocessing
 from pyKES.database.database_experiments import ExperimentalDataset, Experiment
-from pyKES.utilities.find_nearest import find_nearest
-from pyKES.utilities.get_experiments import get_experiments_by_metadata, get_unique_metadata_values
+from pyKES.utilities.harmonize_time_series import harmonize_time_series
+from pyKES.fitting_ODE import Fitting_Model, square_loss_time_series_normalized, objective_function
 
 from simultaneous_detection.data_parsing.raw_data_reading_functions import reading_H2_file, reading_O2_file
 from simultaneous_detection.data_parsing.data_processing import processing_data
+from simultaneous_detection.data_parsing.processing_parameters import PROCESSING_PARAMETERS, GROUP_MAPPING, PLOTTING_INSTRUCTIONS
 
 def metadata_retrival_function(experiment_name, overview_df):
     '''
@@ -46,28 +46,68 @@ def raw_data_reading_function(experiment_name, metadata_dict):
     return raw_data_H2 | raw_data_O2
 
 def processing_function(raw_data_dict, metadata_dict):
-     
+    '''
+    '''
+
     processed_H2 = processing_data(
         time = raw_data_dict['H2_time_s'],
         data = raw_data_dict['H2_umol_L'],
-        savgol_window = 30,
-        savgol_polyorder = 3,
-        start = metadata_dict['Irradiation start [s]'],
-        end = metadata_dict['Irradiation end [s]'],
-        prefix = 'H2'
+        start = metadata_dict['Unisense Irradiation start [s]'],
+        end = metadata_dict['Unisense Irradiation end [s]'],
+        prefix = 'H2',
+        **PROCESSING_PARAMETERS['H2_processing_parameters']
     )
 
     processed_O2 = processing_data(
         time = raw_data_dict['O2_time_s'],
         data = raw_data_dict['O2_data'],
-        savgol_window = 10,
-        savgol_polyorder = 3,
-        start = metadata_dict['Irradiation start [s]'],
-        end = metadata_dict['Irradiation end [s]'],
-        prefix = 'O2'
+        start = metadata_dict['Pyroscience Irradiation start [s]'],
+        end = metadata_dict['Pyroscience Irradiation end [s]'],
+        prefix = 'O2',
+        **PROCESSING_PARAMETERS['O2_processing_parameters']
     )
 
-    return processed_H2 | processed_O2
+    processed_data_dict = processed_H2 | processed_O2
+
+    ### Harmonizing time series for fitting
+    common_time, H2_data_aligned, O2_data_aligned = harmonize_time_series(
+        processed_data_dict['H2_time_reaction'],
+        processed_data_dict['H2_data_reaction'],
+        processed_data_dict['O2_time_reaction'],
+        processed_data_dict['O2_data_reaction']
+    )
+
+    processed_data_dict['common_time_reaction'] = common_time
+    processed_data_dict['H2_data_aligned'] = H2_data_aligned
+    processed_data_dict['O2_data_aligned'] = O2_data_aligned
+    
+    ### Creating experiment object for fitting
+    experiment = Experiment(
+            experiment_name = metadata_dict['experiment_name'],
+            raw_data_file = metadata_dict['File name H2'],
+            color = metadata_dict.get('color', 'black'),
+            group = metadata_dict.get('group', 'default'),
+            metadata = metadata_dict,
+            raw_data = raw_data_dict,
+            processed_data = processed_data_dict
+        )
+    
+    ### Fitting kinetic model
+    model = Fitting_Model(**PROCESSING_PARAMETERS['fitting_parameters'])
+    model.experiments = [experiment]
+    model.loss_function = square_loss_time_series_normalized
+
+    model.optimize(workers = 1, print_results = False, disp = False)
+
+    error, fitting_results = objective_function(model.result.x, model, return_full = True)
+
+    ### Storing fitting results
+    processed_data_dict['H2_fit'] = fitting_results[experiment.experiment_name]['[H2-aq]']
+    processed_data_dict['O2_fit'] = fitting_results[experiment.experiment_name]['[O2-aq]']
+    processed_data_dict['O2_rate_constant'] = model.result.x[0]
+    processed_data_dict['H2_rate_constant'] = model.result.x[1]
+
+    return processed_data_dict
 
 def generate_dataset():
     """
@@ -157,13 +197,18 @@ def generate_dataset():
     """
 
     overview_df = pd.read_excel(
-        'data/251105_O2_H2_Experiment_Overview.xlsx',
+        'data/251120_O2_H2_Experiment_Overview.xlsx',
         sheet_name='Sheet1',
         dtype={'active': str,
                'D2O': str}  # Force 'active' and 'D2O' columns to be read as strings
     )
 
-    dataset = ExperimentalDataset(overview_df = overview_df)
+    dataset = ExperimentalDataset(
+                    overview_df = overview_df,
+                    group_mapping = GROUP_MAPPING,
+                    plotting_instruction = PLOTTING_INSTRUCTIONS,
+                    processing_parameters = PROCESSING_PARAMETERS
+                    )
 
     results = read_in_experiments_multiprocessing(
         dataset,
@@ -173,7 +218,60 @@ def generate_dataset():
         overview_df_based_processing = True,
     )
 
-    dataset.save_to_hdf5('data/251105_processed_O2_H2_data.h5')
+    dataset.save_to_hdf5('data/251122_processed_O2_H2_data.h5')
+
+def debugging_function():
+
+    overview_df = pd.read_excel(
+        'data/251120_O2_H2_Experiment_Overview.xlsx',
+        sheet_name='Sheet1',
+        dtype={'active': str,
+               'D2O': str}  # Force 'active' and 'D2O' columns to be read as strings
+            )
+    
+    metadata_dict = metadata_retrival_function('NB-337', overview_df)
+    raw_data_dict = raw_data_reading_function('NB-337', metadata_dict)
+    processed_data_dict = processing_function(raw_data_dict, metadata_dict)
+
+    fig, ax = plt.subplots(1,2, figsize = (12, 6))
+    fig.tight_layout()
+
+    # ax[0].plot(processed_data_dict['O2_time_reaction'], processed_data_dict['O2_data_reaction'], '.', label = 'O2 data')
+    # ax[0].plot(processed_data_dict['H2_time_reaction'], processed_data_dict['H2_data_reaction'], '.', label = 'H2 data')
+
+    ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['O2_data_aligned'], 'o-', label = 'O2 data', markersize = 2)
+    ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['H2_data_aligned'], 'o-', label = 'H2 data', markersize = 2)
+
+    ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['O2_fit'], '-', label = 'O2 fit')
+    ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['H2_fit'], '-', label = 'H2 fit')
+
+    # # ax[0].plot(raw_data_dict['O2_time_s'], raw_data_dict['O2_data'], '.', label = 'O2 data', markersize = 2)
+    # # ax[0].plot(raw_data_dict['H2_time_s'], raw_data_dict['H2_umol_L'], '.', label = 'H2 data', markersize = 2)
+
+    # # ax[0].plot(raw_data_dict['O2_time_s'], processed_data_dict['O2_data_smoothed'], '-', label = 'O2 data')
+    # # ax[0].plot(raw_data_dict['H2_time_s'], processed_data_dict['H2_data_smoothed'], '-', label = 'H2 data')
+
+    # # ax[0].plot(processed_data_dict['O2_time_resampled'], processed_data_dict['O2_data_resampled'], 'o-', label = 'O2 resampled data')
+    # # ax[0].plot(processed_data_dict['H2_time_resampled'], processed_data_dict['H2_data_resampled'], 'o-', label = 'H2 resampled data')
+
+    # # ax[1].plot(processed_data_dict['O2_time_resampled_diff'], processed_data_dict['O2_data_resampled_diff'], '-', label = 'O2 resampled diff data')
+    # # ax[1].plot(processed_data_dict['H2_time_resampled_diff'], processed_data_dict['H2_data_resampled_diff'], '-', label = 'H2 resampled diff data')
+
+    # ax[1].plot(processed_data_dict['O2_time_diff'], processed_data_dict['O2_data_diff'], '.', label = 'O2 data')
+    # ax[1].plot(processed_data_dict['H2_time_diff'], processed_data_dict['H2_data_diff'], '.', label = 'H2 data')
+
+    # ax[1].plot(processed_data_dict['O2_time_diff'], processed_data_dict['O2_data_diff_smoothed'], '-', label = 'O2 data')
+    # ax[1].plot(processed_data_dict['H2_time_diff'], processed_data_dict['H2_data_diff_smoothed'], '-', label = 'H2 data')
+
+
+    # ax[0].legend()
+    # ax[1].legend()
+
+    plt.show()
+
+
+
 
 if __name__ == "__main__":
     generate_dataset()
+    #debugging_function()
