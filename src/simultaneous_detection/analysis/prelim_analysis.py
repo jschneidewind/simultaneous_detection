@@ -6,39 +6,18 @@ import pprint as pp
 
 
 from pyKES.database.database_experiments import ExperimentalDataset
+from pyKES.plotting.lighten_colors import lighten_color
 
 
-def lighten_color(color, amount=0.5):
-    """
-    Lightens the given color by mixing it with white.
-    
-    Parameters
-    ----------
-    color : str or tuple
-        Color to lighten (matplotlib color)
-    amount : float
-        Amount to lighten (0-1). 0 = original color, 1 = white
-    
-    Returns
-    -------
-    tuple
-        Lightened RGB color
-    """
-    try:
-        c = mcolors.to_rgb(color)
-    except ValueError:
-        c = color
-    
-    c = np.array(c)
-    white = np.array([1, 1, 1])
 
-    return tuple(c + (white - c) * amount)
 
 def main():
 
-    dataset = ExperimentalDataset.load_from_hdf5('data/251122_processed_O2_H2_data.h5')
+    dataset = ExperimentalDataset.load_from_hdf5('data/251128_processed_O2_H2_data.h5')
 
     pp.pprint(dataset.processing_parameters)
+
+    print(dataset.experiments['NB-346'].processed_data['O2_rate_constant'])
     
     # Get list of experiment names in the "Reference" group
     #reference_experiments = dataset.overview_df[dataset.overview_df['Group'] == 'Reference']['Experiment'].tolist()
@@ -90,7 +69,14 @@ def main():
     plt.show()
 
 
+def secondary():
+
+    dataset = ExperimentalDataset.load_from_hdf5('data/test_251128_processed_O2_H2_data.h5')
+
+    print(dataset.experiments['NB-316'].processed_data['O2_flexible_fit_max_rate'])
+
     
 
 if __name__ == "__main__":
-    main()  
+    #main()
+    secondary()  

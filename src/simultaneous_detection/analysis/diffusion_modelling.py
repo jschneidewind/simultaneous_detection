@@ -12,8 +12,8 @@ def main():
         '[H2-aq] > [H2-g], k2 ; factor2',
     ]
 
-    rate_constants = {'k1': 1.0E-9, 
-                      'k2': 1.0E-4}
+    rate_constants = {'k1': 1.0E-11, 
+                      'k2': 1.0E-2}
 
     other_multipliers = {
         'factor1': 2.0,
@@ -24,7 +24,7 @@ def main():
         '[H2O]': 55.5 * 1e6,  # in umol/L
     }
 
-    times = np.linspace(0, 900, 10000)
+    times = np.linspace(0, 12000, 10000)
 
     parsed_reactions, species = parse_reactions(reactions)
 
@@ -34,8 +34,15 @@ def main():
 
     # print(species)
 
-    # ratio_gas_phase = solution[:, species.index('[H2-g]')] / solution[:, species.index('[O2-g]')]
-    # ratio_liquid_phase = solution[:, species.index('[H2-aq]')] / solution[:, species.index('[O2-aq]')]
+    ratio_gas_phase = solution[:, species.index('[H2-g]')][1:] / solution[:, species.index('[O2-g]')][1:]
+    ratio_liquid_phase = solution[:, species.index('[H2-aq]')][1:] / solution[:, species.index('[O2-aq]')][1:]
+
+    max_liquid_phase_rate_H2 = np.max(np.diff(solution[:, species.index('[H2-aq]')][20:]) / np.diff(times[20:]))
+    max_liquid_phase_rate_O2 = np.max(np.diff(solution[:, species.index('[O2-aq]')][20:]) / np.diff(times[20:]))
+
+    print("Max liquid phase rate H2 (umol/L/s):", max_liquid_phase_rate_H2)
+    print("Max liquid phase rate O2 (umol/L/s):", max_liquid_phase_rate_O2)
+    print("Ratio of max rates (H2/O2):", max_liquid_phase_rate_H2 / max_liquid_phase_rate_O2)
 
 
     # Plot results
@@ -44,8 +51,8 @@ def main():
 
     plot_solution(species, times, solution, ax = ax, exclude_species=['[H2O]'])
 
-    # ax.plot(times, ratio_gas_phase, label='[H2-g]/[O2-g]', linestyle='--', color='black')
-    # ax.plot(times, ratio_liquid_phase, label='[H2-aq]/[O2-aq]', linestyle=':', color='gray')
+    ax.plot(times[1:], ratio_gas_phase, label='[H2-g]/[O2-g]', linestyle='--', color='black')
+    ax.plot(times[1:], ratio_liquid_phase, label='[H2-aq]/[O2-aq]', linestyle=':', color='gray')
 
     ax.legend()
 

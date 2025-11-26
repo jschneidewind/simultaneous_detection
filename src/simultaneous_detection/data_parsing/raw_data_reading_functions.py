@@ -1,22 +1,33 @@
 import pandas as pd
 
-def reading_H2_file(file_H2):
+def reading_H2_file(file_H2, mode = 'liquid'):
+    '''
+    Reading data from UniAmp H2 sensor files.
+    '''
 
     raw_data = pd.read_csv(file_H2, sep = ';')
-
-    time_s = raw_data['Time since start (s)'].to_numpy()
-    H2_umol_L = raw_data['Sensor 1 - H2 (μmol/L)'].to_numpy()
     
+    time_s = raw_data['Time since start (s)'].to_numpy()
+
     try:
         H2_temp = raw_data['Sensor 2 - TEMP-UNIAMP (°C)'].to_numpy()
     except KeyError:
         H2_temp = 0
 
     raw_data_dict = {
-        'H2_time_s': time_s,
-        'H2_umol_L': H2_umol_L,
-        'H2_temperature': H2_temp
-    }
+            'H2_time_s': time_s,
+            'H2_temperature': H2_temp}
+    
+    if mode == 'liquid':
+        H2_umol_L = raw_data['Sensor 1 - H2 (μmol/L)'].to_numpy()
+        raw_data_dict['H2_umol_L'] = H2_umol_L
+
+    elif mode == 'gas':
+        H2_Pa = raw_data['Sensor 1 - H2 (Pa)'].to_numpy()
+        raw_data_dict['H2_Pa'] = H2_Pa
+    
+    else:
+        raise ValueError("Mode must be either 'liquid' or 'gas'.")
 
     return raw_data_dict
 
