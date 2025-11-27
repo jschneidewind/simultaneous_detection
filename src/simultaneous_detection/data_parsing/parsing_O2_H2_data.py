@@ -72,6 +72,8 @@ def processing_function(raw_data_dict, metadata_dict):
         start = metadata_dict['Unisense Irradiation start [s]'],
         end = metadata_dict['Unisense Irradiation end [s]'],
         prefix = prefix_H2,
+        liquid_phase_volume = metadata_dict['Liquid phase volume [mL]'],
+        gas_phase_volume = metadata_dict['Gas phase volume [mL]'],
         **PROCESSING_PARAMETERS['H2_processing_parameters']
     )
 
@@ -81,6 +83,8 @@ def processing_function(raw_data_dict, metadata_dict):
         start = metadata_dict['Pyroscience Irradiation start [s]'],
         end = metadata_dict['Pyroscience Irradiation end [s]'],
         prefix = prefix_O2,
+        liquid_phase_volume = metadata_dict['Liquid phase volume [mL]'],
+        gas_phase_volume = metadata_dict['Gas phase volume [mL]'],
         **PROCESSING_PARAMETERS['O2_processing_parameters']
     )
 
@@ -137,51 +141,6 @@ def processing_function(raw_data_dict, metadata_dict):
             common_time,
             print_results = True
         )
-
-    # ## Fitting kinetic model
-    # model = Fitting_Model(**PROCESSING_PARAMETERS['fitting_parameters'])
-    # model.experiments = [experiment]
-    # model.loss_function = square_loss_time_series_normalized
-
-    # model.optimize(workers = 1, print_results = True, disp = False)
-
-    # error, fitting_results = objective_function(model.result.x, model, return_full = True)
-
-    # ### Fitting flexible kinetic model
-    # gases = ['H2', 'O2']
-
-    # for gas in gases:
-
-
-    #     model_flexible = Fitting_Model(**PROCESSING_PARAMETERS['fitting_parameters_flexible'])
-
-    #     model_flexible.data_to_be_fitted = {
-    #                         '[Gas-aq]': {'x': 'processed_data/common_time_reaction',
-    #                                      'y': f'processed_data/{gas}_data_aligned'},
-    #                         } 
-    #     model_flexible.experiments = [experiment]
-    #     model_flexible.loss_function = square_loss_time_series_normalized
-
-    #     model_flexible.optimize(workers = 1, print_results = True, disp = False)
-
-    #     error_flexible, fitting_results_flexible = objective_function(model_flexible.result.x, 
-    #                                                                 model_flexible, 
-    #                                                                 return_full = True)
-        
-    #     results = fitting_results_flexible[experiment.experiment_name][f'[Gas-aq]']
-    #     flexible_rate = np.diff(results) / np.diff(common_time)
-
-    #     processed_data_dict[f'{gas}_fit_flexible'] = results
-    #     processed_data_dict[f'{gas}_rate_flexible'] = flexible_rate
-    #     processed_data_dict[f'{gas}_max_rate_flexible'] = np.max(flexible_rate)
-    
-    
-    
-    # ### Storing fitting results
-    # processed_data_dict['H2_fit'] = fitting_results[experiment.experiment_name]['[H2-aq]']
-    # processed_data_dict['O2_fit'] = fitting_results[experiment.experiment_name]['[O2-aq]']
-    # processed_data_dict['O2_rate_constant'] = model.result.x[0]
-    # processed_data_dict['H2_rate_constant'] = model.result.x[1]
 
     return processed_data_dict
 
@@ -294,8 +253,7 @@ def generate_dataset():
         overview_df_based_processing = True,
     )
 
-
-    dataset.save_to_hdf5('data/test_251128_processed_O2_H2_data.h5')
+    dataset.save_to_hdf5('data/251129_processed_O2_H2_data.h5')
 
 def debugging_function():
 
@@ -322,9 +280,9 @@ def debugging_function():
     # ax[0].plot(processed_data_dict['O2_time_reaction'], processed_data_dict['O2_poly_fit'], '-', label = 'O2 poly fit')
     # ax[0].plot(processed_data_dict['H2_time_reaction'], processed_data_dict['H2_poly_fit'], '-', label = 'H2 poly fit')
 
-    # ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['O2_gas_data_aligned'], 'o-', label = 'O2 data', markersize = 1)
-    # ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['H2_gas_data_aligned'], 'o-', label = 'H2 data', markersize = 1)
-    # ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['H2_gas_data_aligned'] / processed_data_dict['O2_gas_data_aligned'])
+    ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['O2_gas_data_aligned'], 'o-', label = 'O2 data', markersize = 1)
+    ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['H2_gas_data_aligned'], 'o-', label = 'H2 data', markersize = 1)
+    #ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['H2_gas_data_aligned'] / processed_data_dict['O2_gas_data_aligned'])
 
     # ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['O2_fit'], '-', label = 'O2 fit')
     # ax[0].plot(processed_data_dict['common_time_reaction'], processed_data_dict['H2_fit'], '-', label = 'H2 fit')

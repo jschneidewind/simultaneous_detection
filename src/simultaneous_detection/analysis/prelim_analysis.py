@@ -71,9 +71,27 @@ def main():
 
 def secondary():
 
-    dataset = ExperimentalDataset.load_from_hdf5('data/test_251128_processed_O2_H2_data.h5')
+    dataset = ExperimentalDataset.load_from_hdf5('data/251129_processed_O2_H2_data.h5')
 
-    print(dataset.experiments['NB-316'].processed_data['O2_flexible_fit_max_rate'])
+    print(*dataset.experiments['NB-312'].processed_data.keys(), sep = '\n')
+
+    experiment = dataset.experiments['NB-312']
+
+    plt.plot(experiment.processed_data['common_time_reaction'],
+             experiment.processed_data['O2_gas_data_aligned'], label = 'O2')
+    plt.plot(experiment.processed_data['common_time_reaction'],
+                experiment.processed_data['H2_gas_data_aligned'], label = 'H2')
+    
+    experiment = dataset.experiments['NB-316']
+
+    plt.plot(experiment.processed_data['common_time_reaction'],
+             experiment.processed_data['O2_data_aligned'], label = 'O2 aq')
+    
+    plt.plot(experiment.processed_data['common_time_reaction'],
+                experiment.processed_data['H2_data_aligned'], label = 'H2 aq')
+    
+    plt.legend()
+    plt.show()
 
     
 

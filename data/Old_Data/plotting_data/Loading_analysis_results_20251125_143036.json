@@ -1,0 +1,310 @@
+{
+  "plotting_data": {
+    "H2 max rate (flexible)": {
+      "unit": "Rate / umol L^-1 s^-1",
+      "data": {
+        "0.0005": {
+          "min": 0.0448789769172587,
+          "max": 0.05794257063261743,
+          "mean": 0.04998777823299224,
+          "median": 0.04714178714910057,
+          "std": 0.005700240879540861,
+          "count": 3,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-327",
+              "y_value": 0.05794257063261743,
+              "subset_key": "Loading||0.0005",
+              "subset_value": "0.0005",
+              "group_name": "Loading",
+              "color": "orange"
+            },
+            {
+              "experiment_name": "NB-332",
+              "y_value": 0.04714178714910057,
+              "subset_key": "Loading||0.0005",
+              "subset_value": "0.0005",
+              "group_name": "Loading",
+              "color": "blue"
+            },
+            {
+              "experiment_name": "NB-354",
+              "y_value": 0.0448789769172587,
+              "subset_key": "Loading||0.0005",
+              "subset_value": "0.0005",
+              "group_name": "Loading",
+              "color": "blue"
+            }
+          ]
+        },
+        "0.001": {
+          "min": 0.06717648341516612,
+          "max": 0.0942817592664044,
+          "mean": 0.08275922072140961,
+          "median": 0.08307105283806573,
+          "std": 0.010269894679763714,
+          "count": 6,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-316",
+              "y_value": 0.0942817592664044,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "blue"
+            },
+            {
+              "experiment_name": "NB-319",
+              "y_value": 0.08860362823522333,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-320",
+              "y_value": 0.09422211931639997,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "green"
+            },
+            {
+              "experiment_name": "NB-336",
+              "y_value": 0.07753847744090814,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "red"
+            },
+            {
+              "experiment_name": "NB-348",
+              "y_value": 0.07473285665435564,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-353",
+              "y_value": 0.06717648341516612,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "red"
+            }
+          ]
+        },
+        "0.002": {
+          "min": 0.03540979139642827,
+          "max": 0.042732949016019,
+          "mean": 0.03993334026264838,
+          "median": 0.04165728037549787,
+          "std": 0.003228636091278697,
+          "count": 3,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-328",
+              "y_value": 0.04165728037549787,
+              "subset_key": "Loading||0.002",
+              "subset_value": "0.002",
+              "group_name": "Loading",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-333",
+              "y_value": 0.03540979139642827,
+              "subset_key": "Loading||0.002",
+              "subset_value": "0.002",
+              "group_name": "Loading",
+              "color": "purple"
+            },
+            {
+              "experiment_name": "NB-355",
+              "y_value": 0.042732949016019,
+              "subset_key": "Loading||0.002",
+              "subset_value": "0.002",
+              "group_name": "Loading",
+              "color": "purple"
+            }
+          ]
+        }
+      }
+    },
+    "O2 max rate (flexible)": {
+      "unit": "Rate / umol L^-1 s^-1",
+      "data": {
+        "0.0005": {
+          "min": 0.0313960787490651,
+          "max": 0.041177751353406525,
+          "mean": 0.03776706622583991,
+          "median": 0.040727368575048085,
+          "std": 0.004508719125847642,
+          "count": 3,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-327",
+              "y_value": 0.040727368575048085,
+              "subset_key": "Loading||0.0005",
+              "subset_value": "0.0005",
+              "group_name": "Loading",
+              "color": "orange"
+            },
+            {
+              "experiment_name": "NB-332",
+              "y_value": 0.041177751353406525,
+              "subset_key": "Loading||0.0005",
+              "subset_value": "0.0005",
+              "group_name": "Loading",
+              "color": "blue"
+            },
+            {
+              "experiment_name": "NB-354",
+              "y_value": 0.0313960787490651,
+              "subset_key": "Loading||0.0005",
+              "subset_value": "0.0005",
+              "group_name": "Loading",
+              "color": "blue"
+            }
+          ]
+        },
+        "0.001": {
+          "min": 0.039628394003273414,
+          "max": 0.06522922734773066,
+          "mean": 0.05214275024500032,
+          "median": 0.05042180519740437,
+          "std": 0.009686085243722784,
+          "count": 6,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-316",
+              "y_value": 0.06522922734773066,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "blue"
+            },
+            {
+              "experiment_name": "NB-319",
+              "y_value": 0.05478293943131206,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-320",
+              "y_value": 0.0632465648425032,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "green"
+            },
+            {
+              "experiment_name": "NB-336",
+              "y_value": 0.039628394003273414,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "red"
+            },
+            {
+              "experiment_name": "NB-348",
+              "y_value": 0.04606067096349668,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-353",
+              "y_value": 0.043908704881685905,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "red"
+            }
+          ]
+        },
+        "0.002": {
+          "min": 0.031586917631270285,
+          "max": 0.032643522059699746,
+          "mean": 0.032256960143540625,
+          "median": 0.032540440739651844,
+          "std": 0.0004756568551822949,
+          "count": 3,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-328",
+              "y_value": 0.032540440739651844,
+              "subset_key": "Loading||0.002",
+              "subset_value": "0.002",
+              "group_name": "Loading",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-333",
+              "y_value": 0.031586917631270285,
+              "subset_key": "Loading||0.002",
+              "subset_value": "0.002",
+              "group_name": "Loading",
+              "color": "purple"
+            },
+            {
+              "experiment_name": "NB-355",
+              "y_value": 0.032643522059699746,
+              "subset_key": "Loading||0.002",
+              "subset_value": "0.002",
+              "group_name": "Loading",
+              "color": "purple"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "metadata": {
+    "export_timestamp": "2025-11-25T14:30:36.808652",
+    "h5_filename": "Unknown",
+    "x_axis": {
+      "mode": "Catalyst loading [wt% Rh/Cr]",
+      "label": "Catalyst loading [wt% Rh/Cr]",
+      "type": "categorical"
+    },
+    "selected_analysis_results": [
+      "H2 max rate (flexible)",
+      "O2 max rate (flexible)"
+    ],
+    "selected_subsets": {
+      "Loading||0.0005": {
+        "experiments": [
+          "NB-327",
+          "NB-332",
+          "NB-354"
+        ],
+        "count": 3
+      },
+      "Loading||0.002": {
+        "experiments": [
+          "NB-328",
+          "NB-333",
+          "NB-355"
+        ],
+        "count": 3
+      },
+      "Reference||Reference": {
+        "experiments": [
+          "NB-316",
+          "NB-319",
+          "NB-320",
+          "NB-336",
+          "NB-348",
+          "NB-353"
+        ],
+        "count": 6
+      }
+    },
+    "total_experiments_displayed": 12,
+    "total_data_points": 24
+  }
+}

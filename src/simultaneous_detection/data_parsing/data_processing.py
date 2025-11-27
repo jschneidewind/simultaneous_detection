@@ -7,6 +7,27 @@ from pyKES.utilities.offset_correction import offset_correction
 
 from pyKES.fitting_ODE import Fitting_Model, square_loss_time_series_normalized, objective_function
 
+def convert_gases_to_umol_L(data,
+                            liquid_phase_volume,
+                             gas_phase_volume,
+                             H2 = False):
+    '''
+    '''
+    
+    if H2 is True:
+        NORMAL_PRESSURE = 1013.25
+        data = data / NORMAL_PRESSURE # Convert from Pa to vol%
+    
+    MOLAR_VOLUME_STANRDARD_CONDITIONS = 24.465 # L/mol at 25C and 1 atm
+    scaling_factor = 1 / (liquid_phase_volume / 1000) # Scaling from used liquid phase volume to 1 L
+
+    gas_L = data * (1/100) * gas_phase_volume * (1/1000) # Convert from vol% to L of gas
+    gas_mol = gas_L / MOLAR_VOLUME_STANRDARD_CONDITIONS # Convert from L of gas to mol of gas
+
+    gas_umol = gas_mol * 1e6 # Convert from mol to umol
+    gas_umol_L = gas_umol * scaling_factor # Scale to 1 L of liquid phase
+
+    return gas_umol_L
 
 def processing_data(time,
                     data,
@@ -19,13 +40,20 @@ def processing_data(time,
                     poly_order,
                     start,
                     end,
-                    prefix):
+                    prefix,
+                    liquid_phase_volume,
+                    gas_phase_volume):
     
-    if prefix == 'H2_gas':
-        NORMAL_PRESSURE = 1013.25
-        data = data / NORMAL_PRESSURE # Convert from Pa to vol%
-
-        ### Figuring out correct unit for gas phase H2 and O2 (vol% does not work)
+    if 'gas' in prefix:
+        if 'H2' in prefix:
+            H2 = True
+        else:
+            H2 = False
+        
+        data = convert_gases_to_umol_L(data, 
+                                       liquid_phase_volume, 
+                                       gas_phase_volume, 
+                                       H2 = H2)
     
     time_reaction, data_reaction = offset_correction(time, data, offset, start, end)
 

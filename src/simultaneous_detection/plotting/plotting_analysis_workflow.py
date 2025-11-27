@@ -20,7 +20,7 @@ from simultaneous_detection.data_parsing.processing_parameters import PLOTTING_I
 
 def main():
 
-    dataset = ExperimentalDataset.load_from_hdf5('data/251128_processed_O2_H2_data.h5')
+    dataset = ExperimentalDataset.load_from_hdf5('data/251129_processed_O2_H2_data.h5')
 
     experiment = dataset.experiments['NB-353']
 
