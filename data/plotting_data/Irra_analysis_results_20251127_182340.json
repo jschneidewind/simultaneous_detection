@@ -1,0 +1,386 @@
+{
+  "plotting_data": {
+    "H2 max rate (polyfit)": {
+      "unit": "Rate / umol L^-1 s^-1",
+      "data": {
+        "20.0": {
+          "min": 0.02063770231338946,
+          "max": 0.031773799250785245,
+          "mean": 0.025104125195676792,
+          "median": 0.024002499609266235,
+          "std": 0.00420859167659169,
+          "count": 4,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-325",
+              "y_value": 0.02541464910047315,
+              "subset_key": "Intensity||20",
+              "subset_value": "20",
+              "group_name": "Intensity",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-326",
+              "y_value": 0.022590350118059318,
+              "subset_key": "Intensity||20",
+              "subset_value": "20",
+              "group_name": "Intensity",
+              "color": "green"
+            },
+            {
+              "experiment_name": "NB-337",
+              "y_value": 0.031773799250785245,
+              "subset_key": "Intensity||20",
+              "subset_value": "20",
+              "group_name": "Intensity",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-345",
+              "y_value": 0.02063770231338946,
+              "subset_key": "Intensity||20",
+              "subset_value": "20",
+              "group_name": "Intensity",
+              "color": "black"
+            }
+          ]
+        },
+        "50.0": {
+          "min": 0.05235890794226705,
+          "max": 0.08317309054007063,
+          "mean": 0.07094936993860995,
+          "median": 0.07084064283275326,
+          "std": 0.01070518133206308,
+          "count": 7,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-316",
+              "y_value": 0.08304840485282393,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "blue"
+            },
+            {
+              "experiment_name": "NB-319",
+              "y_value": 0.07691678593167907,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-320",
+              "y_value": 0.08317309054007063,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "green"
+            },
+            {
+              "experiment_name": "NB-336",
+              "y_value": 0.07053894007383521,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "red"
+            },
+            {
+              "experiment_name": "NB-348",
+              "y_value": 0.07084064283275326,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-353",
+              "y_value": 0.05976881739684055,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "red"
+            },
+            {
+              "experiment_name": "NB-356",
+              "y_value": 0.05235890794226705,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            }
+          ]
+        },
+        "100.0": {
+          "min": 0.14506558072335154,
+          "max": 0.14761971945504493,
+          "mean": 0.14634265008919822,
+          "median": 0.14634265008919822,
+          "std": 0.001277069365846692,
+          "count": 2,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-318",
+              "y_value": 0.14506558072335154,
+              "subset_key": "Intensity||100",
+              "subset_value": "100",
+              "group_name": "Intensity",
+              "color": "red"
+            },
+            {
+              "experiment_name": "NB-322",
+              "y_value": 0.14761971945504493,
+              "subset_key": "Intensity||100",
+              "subset_value": "100",
+              "group_name": "Intensity",
+              "color": "orange"
+            }
+          ]
+        },
+        "150.0": {
+          "min": 0.17772470902846038,
+          "max": 0.1996916723134191,
+          "mean": 0.18870819067093975,
+          "median": 0.18870819067093975,
+          "std": 0.010983481642479365,
+          "count": 2,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-344",
+              "y_value": 0.1996916723134191,
+              "subset_key": "Intensity||150",
+              "subset_value": "150",
+              "group_name": "Intensity",
+              "color": "orange"
+            },
+            {
+              "experiment_name": "NB-347",
+              "y_value": 0.17772470902846038,
+              "subset_key": "Intensity||150",
+              "subset_value": "150",
+              "group_name": "Intensity",
+              "color": "orange"
+            }
+          ]
+        }
+      }
+    },
+    "O2 max rate (polyfit)": {
+      "unit": "Rate / umol L^-1 s^-1",
+      "data": {
+        "20.0": {
+          "min": 0.01820591503132127,
+          "max": 0.022076001445482555,
+          "mean": 0.020394452437775677,
+          "median": 0.020647946637149438,
+          "std": 0.0015292330054527772,
+          "count": 4,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-325",
+              "y_value": 0.019751176689821227,
+              "subset_key": "Intensity||20",
+              "subset_value": "20",
+              "group_name": "Intensity",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-326",
+              "y_value": 0.022076001445482555,
+              "subset_key": "Intensity||20",
+              "subset_value": "20",
+              "group_name": "Intensity",
+              "color": "green"
+            },
+            {
+              "experiment_name": "NB-337",
+              "y_value": 0.01820591503132127,
+              "subset_key": "Intensity||20",
+              "subset_value": "20",
+              "group_name": "Intensity",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-345",
+              "y_value": 0.02154471658447765,
+              "subset_key": "Intensity||20",
+              "subset_value": "20",
+              "group_name": "Intensity",
+              "color": "black"
+            }
+          ]
+        },
+        "50.0": {
+          "min": 0.04054323232589807,
+          "max": 0.0623003368239777,
+          "mean": 0.048683422402278784,
+          "median": 0.043436868522101525,
+          "std": 0.0086838039253078,
+          "count": 7,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-316",
+              "y_value": 0.060227278403771664,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "blue"
+            },
+            {
+              "experiment_name": "NB-319",
+              "y_value": 0.051534531140046455,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-320",
+              "y_value": 0.0623003368239777,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "green"
+            },
+            {
+              "experiment_name": "NB-336",
+              "y_value": 0.040975221424359276,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "red"
+            },
+            {
+              "experiment_name": "NB-348",
+              "y_value": 0.043436868522101525,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-353",
+              "y_value": 0.04176648817579677,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "red"
+            },
+            {
+              "experiment_name": "NB-356",
+              "y_value": 0.04054323232589807,
+              "subset_key": "Reference||Reference",
+              "subset_value": "Reference",
+              "group_name": "Reference",
+              "color": "black"
+            }
+          ]
+        },
+        "100.0": {
+          "min": 0.10359007982914764,
+          "max": 0.13499113292666196,
+          "mean": 0.1192906063779048,
+          "median": 0.1192906063779048,
+          "std": 0.015700526548757157,
+          "count": 2,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-318",
+              "y_value": 0.10359007982914764,
+              "subset_key": "Intensity||100",
+              "subset_value": "100",
+              "group_name": "Intensity",
+              "color": "red"
+            },
+            {
+              "experiment_name": "NB-322",
+              "y_value": 0.13499113292666196,
+              "subset_key": "Intensity||100",
+              "subset_value": "100",
+              "group_name": "Intensity",
+              "color": "orange"
+            }
+          ]
+        },
+        "150.0": {
+          "min": 0.12296371041109116,
+          "max": 0.14379699766270373,
+          "mean": 0.13338035403689746,
+          "median": 0.13338035403689746,
+          "std": 0.010416643625806285,
+          "count": 2,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-344",
+              "y_value": 0.14379699766270373,
+              "subset_key": "Intensity||150",
+              "subset_value": "150",
+              "group_name": "Intensity",
+              "color": "orange"
+            },
+            {
+              "experiment_name": "NB-347",
+              "y_value": 0.12296371041109116,
+              "subset_key": "Intensity||150",
+              "subset_value": "150",
+              "group_name": "Intensity",
+              "color": "orange"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "metadata": {
+    "export_timestamp": "2025-11-27T18:23:40.114897",
+    "h5_filename": "251130_processed_O2_H2_data.h5",
+    "x_axis": {
+      "mode": "Irradiance [mW/cm2]",
+      "label": "Irradiance [mW/cm2]",
+      "type": "categorical"
+    },
+    "selected_analysis_results": [
+      "H2 max rate (polyfit)",
+      "O2 max rate (polyfit)"
+    ],
+    "selected_subsets": {
+      "Intensity||100": {
+        "experiments": [
+          "NB-318",
+          "NB-322"
+        ],
+        "count": 2
+      },
+      "Intensity||150": {
+        "experiments": [
+          "NB-344",
+          "NB-347"
+        ],
+        "count": 2
+      },
+      "Intensity||20": {
+        "experiments": [
+          "NB-325",
+          "NB-326",
+          "NB-337",
+          "NB-345"
+        ],
+        "count": 4
+      },
+      "Reference||Reference": {
+        "experiments": [
+          "NB-316",
+          "NB-319",
+          "NB-320",
+          "NB-336",
+          "NB-348",
+          "NB-353",
+          "NB-356"
+        ],
+        "count": 7
+      }
+    },
+    "total_experiments_displayed": 15,
+    "total_data_points": 30
+  }
+}

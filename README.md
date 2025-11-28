@@ -1,4 +1,17 @@
-# Multi Timescale Model
+# Simultaneous detection O2/H2
+
+## Workflow
+
+1. Completing overview Excel sheet, selecting active/inactive experiments
+2. Running "parsing_O2_H2_data.py" to generate dataset
+3. Visualize dataset in pyKES Streamlit app
+4. Analysing rate: selecting experiments and x-axis, exporting data as JSON
+5. Fitting gas/liquid kinetic model using "fitting_liquid_gas_phase.py", saving new dataset with fitting results
+6. Creating figure for liquid/gas model with new dataset
+7. Creating workflow figure with dataset
+8. Creating results figure with downloaded JSON files
+9. Creating data plots using dataset
+
 
 ## Contributing
 

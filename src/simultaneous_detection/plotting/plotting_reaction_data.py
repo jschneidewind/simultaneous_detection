@@ -20,8 +20,8 @@ from simultaneous_detection.data_parsing.processing_parameters import GROUP_MAPP
 def plot_experiment_group(
     dataset: ExperimentalDataset,
     experiment_group: str,
-    figure_title: str,
     plotting_instructions: dict,
+    figure_title: str = "",
     plotting_styles: dict = None,
     viridis_range: tuple = (0.2, 0.8),
     subplot_title_format: str = "{value}",
@@ -34,6 +34,7 @@ def plot_experiment_group(
     legend_location: tuple = (0.5, 0.95),
     save_figure: bool = False,
     save_path: str = None,
+    show_figure: bool = True,
 ) -> tuple:
     """
     Generate a matplotlib figure with subplots for each unique condition value
@@ -248,13 +249,16 @@ def plot_experiment_group(
             raise ValueError("save_path must be provided when save_figure is True")
         fig.savefig(save_path, dpi=300, bbox_inches='tight')
         print(f"Figure saved to: {save_path}")
+
+    if show_figure:
+        plt.show()
     
     return fig, axes
 
 
 def main():
     # Example usage
-    dataset = ExperimentalDataset.load_from_hdf5('data/251129_processed_O2_H2_data.h5')
+    dataset = ExperimentalDataset.load_from_hdf5('data/251130_processed_O2_H2_data.h5')
     
     # Define which data series to plot
     plotting_instructions = {
@@ -268,87 +272,96 @@ def main():
         'Reaction (O$_2$)': {'linestyle': '-', 'linewidth': 1.5},
     }
     
-    fig, axes = plot_experiment_group(
-        dataset=dataset,
-        experiment_group='Intensity',
-        figure_title='H$_2$ and O$_2$ Evolution by Irradiance',
-        plotting_instructions=plotting_instructions,
-        plotting_styles=plotting_styles,
-        viridis_range=(0.2, 0.8),
-        subplot_title_format="{value} mW/cm$^2$",
-        xlabel="Time / s",
-        ylim = (-10, 140),
-        ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
-        save_figure=False,
-        save_path=None,
-    )
+    # fig, axes = plot_experiment_group(
+    #     dataset=dataset,
+    #     experiment_group='Intensity',
+    #     figure_title='Screening of irradiance',
+    #     plotting_instructions=plotting_instructions,
+    #     plotting_styles=plotting_styles,
+    #     viridis_range=(0.2, 0.8),
+    #     subplot_title_format="{value} mW·cm$^{{-2}}$",
+    #     xlabel="Time / s",
+    #     ylim = (-10, 140),
+    #     figsize_per_row= (8, 3),
+    #     subplots_adjustments={'top': 0.8},
+    #     ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
+    #     save_figure=False,
+    #     save_path='figures/Intensity_Screening.pdf',
+    #     show_figure=True,
+    # )
 
-    fig, axes = plot_experiment_group(
-        dataset=dataset,
-        experiment_group='Loading',
-        figure_title='H$_2$ and O$_2$ Evolution by co-catalys loading',
-        plotting_instructions=plotting_instructions,
-        plotting_styles=plotting_styles,
-        viridis_range=(0.2, 0.8),
-        subplot_title_format="{value} Loading",
-        xlabel="Time / s",
-        ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
-        save_figure=False,
-        save_path=None,
-    )
+    # fig, axes = plot_experiment_group(
+    #     dataset=dataset,
+    #     experiment_group='Loading',
+    #     figure_title='Screening of co-catalyst loading',
+    #     plotting_instructions=plotting_instructions,
+    #     plotting_styles=plotting_styles,
+    #     viridis_range=(0.2, 0.8),
+    #     subplot_title_format="{value} wt. fraction Rh/Cr",
+    #     xlabel="Time / s",
+    #     ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
+    #     figsize_per_row= (8, 4),
+    #     subplots_adjustments={'top': 0.7},
+    #     legend_location=(0.5, 0.9),
+    #     save_figure=False,
+    #     save_path='figures/Loading_Screening.pdf',
+    #     show_figure=True,
+    # )
 
     fig, axes = plot_experiment_group(
         dataset=dataset,
         experiment_group='Temperature',
-        figure_title='H$_2$ and O$_2$ Evolution by temperature',
+        figure_title='Screening of reaction temperature',
         plotting_instructions=plotting_instructions,
         plotting_styles=plotting_styles,
         viridis_range=(0.2, 0.8),
-        subplot_title_format="{value} Temp (°C)",
+        subplot_title_format="{value} °C",
+        ylim= (-5, 60),
         xlabel="Time / s",
         ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
-        subplots_adjustments={'top': 0.6},
+        subplots_adjustments={'top': 0.7},
         legend_location=(0.5, 0.9),
         figsize_per_row= (8, 4),
-        save_figure=False,
-        save_path=None,
+        save_figure=True,
+        save_path='figures/Temperature_Screening.pdf',
+        show_figure=True,
     )
     
-    fig, axes = plot_experiment_group(
-        dataset=dataset,
-        experiment_group='Reference',
-        figure_title='H$_2$ and O$_2$ Evolution by Reference',
-        plotting_instructions=plotting_instructions,
-        plotting_styles=plotting_styles,
-        viridis_range=(0.2, 0.8),
-        subplot_title_format="{value} Reference",
-        xlabel="Time / s",
-        ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
-        subplots_adjustments={'top': 0.6},
-        legend_location=(0.5, 0.9),
-        figsize_per_row= (8, 4),
-        save_figure=False,
-        save_path=None,
-    )
+    # fig, axes = plot_experiment_group(
+    #     dataset=dataset,
+    #     experiment_group='Reference',
+    #     plotting_instructions=plotting_instructions,
+    #     plotting_styles=plotting_styles,
+    #     viridis_range=(0.2, 0.8),
+    #     subplot_title_format="",
+    #     xlabel="Time / s",
+    #     ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
+    #     subplots_adjustments={'top': 0.8},
+    #     legend_location=(0.54, 1.0),
+    #     figsize_per_row= (5, 5),
+    #     save_figure=False,
+    #     save_path='figures/Reference_Conditions.pdf',
+    #     show_figure=True,
+    # )
 
-    fig, axes = plot_experiment_group(
-        dataset=dataset,
-        experiment_group='D2O',
-        figure_title='H$_2$ and O$_2$ Evolution by D2O',
-        plotting_instructions=plotting_instructions,
-        plotting_styles=plotting_styles,
-        viridis_range=(0.2, 0.8),
-        subplot_title_format="{value} D2O",
-        xlabel="Time / s",
-        ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
-        subplots_adjustments={'top': 0.6},
-        legend_location=(0.5, 0.9),
-        figsize_per_row= (8, 4),
-        save_figure=False,
-        save_path=None,
-    )
+    # fig, axes = plot_experiment_group(
+    #     dataset=dataset,
+    #     experiment_group='D2O',
+    #     plotting_instructions=plotting_instructions,
+    #     plotting_styles=plotting_styles,
+    #     viridis_range=(0.2, 0.8),
+    #     subplot_title_format="D$_2$O",
+    #     xlabel="Time / s",
+    #     ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
+    #     subplots_adjustments={'top': 0.8},
+    #     legend_location=(0.54, 1.0),
+    #     figsize_per_row= (5, 5),
+    #     save_figure=True,
+    #     save_path='figures/D2O_Conditions.pdf',
+    #     show_figure=True,
+    # )
 
-    plt.show()
+
 
 
     

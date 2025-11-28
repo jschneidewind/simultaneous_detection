@@ -15,7 +15,7 @@ from pyKES.database.database_experiments import ExperimentalDataset
 
 
 def main():
-    dataset = ExperimentalDataset.load_from_hdf5('data/251129_processed_O2_H2_data_with_fits.h5')
+    dataset = ExperimentalDataset.load_from_hdf5('data/251130_processed_O2_H2_data_with_fits.h5')
 
     fig, ax = plt.subplots(2, 1, figsize=(7, 7))
     fig.tight_layout(pad=2.0)
@@ -109,7 +109,7 @@ def main():
     ax[1].set_ylabel('Concentration / μmol·L$^{-1}$')
 
 
-    img = mpimg.imread('data/Reaction_Scheme_Liquid_Gas.png')
+    img = mpimg.imread('figures/Reaction_Scheme_Liquid_Gas.png')
     imagebox = OffsetImage(img, zoom=0.1) 
     ab = AnnotationBbox(imagebox, (1.71, 1.2), frameon=True, 
                         bboxprops=dict(boxstyle='round,pad=0.5', edgecolor = 'lightgrey'),
@@ -122,7 +122,7 @@ def main():
     ax[1].text(-0.23, 1.0, 'B',transform=ax[1].transAxes,fontsize=22, fontweight='bold')
     ax[1].text(1.3, 1.57, 'C',transform=ax[1].transAxes,fontsize=22, fontweight='bold')
 
-
+    #fig.savefig('Figures/Liquid_Gasphase_Model.pdf', dpi = 500)
 
     plt.show()
     

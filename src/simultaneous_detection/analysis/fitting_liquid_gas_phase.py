@@ -11,12 +11,12 @@ from pyKES.fitting_ODE import (Fitting_Model,
 
 def main():
 
-    dataset = ExperimentalDataset.load_from_hdf5('data/251129_processed_O2_H2_data.h5')
+    dataset = ExperimentalDataset.load_from_hdf5('data/251130_processed_O2_H2_data.h5')
 
-    model = Fitting_Model(['[H2O-int] > 2 [H2-aq] + [O2-aq], k1',
-                           '[H2O] > [H2O-int], k3',
-                           '[O2-aq] > [O2-g], k2',
-                           '[H2-aq] > [H2-g], k2 ; factor1',
+    model = Fitting_Model(['[H2O] > [H2O-int], k1',
+                           '[H2O-int] > 2 [H2-aq] + [O2-aq], k2',
+                           '[O2-aq] > [O2-g], k3',
+                           '[H2-aq] > [H2-g], k3 ; factor1',
                             ])
                                                 
     model.experiments = [dataset.experiments['NB-312'],
@@ -46,7 +46,6 @@ def main():
         '[H2O]': 55 * 1e6,  # Convert from mol/L to μmol/L
     }
     
-    
     model.times = {
         'times': 'processed_data/common_time_reaction',
     }
@@ -58,18 +57,16 @@ def main():
     model.visualize_optimization_results()
 
     model.add_fit_results_to_database(dataset)
-    model.database.save_to_hdf5('data/251129_processed_O2_H2_data_with_fits.h5')
+    model.database.save_to_hdf5('data/251130_processed_O2_H2_data_with_fits.h5')
 
     plt.show()
 
-    
-
 if __name__ == '__main__':
 
-    # Result 251126-18:56
-    # ----------------------------
+    # Result 251127-18:30
+    #     ----------------------------
     # Optimized rate constants:
-    # {'k1': np.float64(0.0022902702667019215),
-    #  'k2': np.float64(0.0057268874623205845),
-    #  'k3': np.float64(4.144375953529789e-09)}
+    # {'k1': np.float64(4.15115769536456e-09),
+    #  'k2': np.float64(0.0022685452918629334),
+    #  'k3': np.float64(0.005697542035868641)}
     main()
