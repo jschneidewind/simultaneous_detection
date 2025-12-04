@@ -97,7 +97,8 @@ def fitting_wrapper(experiment,
                     processed_data_dict,
                     common_time,
                     print_results = False,
-                    disp = False):
+                    disp = False,
+                    general_prefix = ''):
     '''
     '''
     
@@ -120,6 +121,10 @@ def fitting_wrapper(experiment,
 
     for prefix, rate_constant_index in parameters_mapping['rate_constant_mapping'].items():
         processed_data_dict[f'{prefix}_rate_constant'] = model.result.x[rate_constant_index]
+
+    rate_constants = dict(zip(model.rate_constants_to_optimize.keys(), model.result.x))
+    processed_data_dict[f'{general_prefix}_all_rate_constants'] = rate_constants
+    processed_data_dict[f'{general_prefix}_fitting_error'] = error
 
     return processed_data_dict
     

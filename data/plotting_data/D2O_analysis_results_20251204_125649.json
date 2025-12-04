@@ -1,0 +1,149 @@
+{
+  "plotting_data": {
+    "H2 max rate (polyfit, gas phase)": {
+      "unit": "Rate / umol L^-1 s^-1",
+      "data": {
+        "False": {
+          "min": 0.1787524263416609,
+          "max": 0.193590235022812,
+          "mean": 0.18617133068223646,
+          "median": 0.18617133068223646,
+          "std": 0.007418904340575544,
+          "count": 2,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-363",
+              "y_value": 0.193590235022812,
+              "subset_key": "Gas phase||Reference",
+              "subset_value": "Reference",
+              "group_name": "Gas phase",
+              "color": "orange"
+            },
+            {
+              "experiment_name": "NB-364",
+              "y_value": 0.1787524263416609,
+              "subset_key": "Gas phase||Reference",
+              "subset_value": "Reference",
+              "group_name": "Gas phase",
+              "color": "blue"
+            }
+          ]
+        },
+        "True": {
+          "min": 0.07624895692676635,
+          "max": 0.08419315466455589,
+          "mean": 0.08022105579566112,
+          "median": 0.08022105579566112,
+          "std": 0.003972098868894769,
+          "count": 2,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-366",
+              "y_value": 0.07624895692676635,
+              "subset_key": "Gas phase D2O||True",
+              "subset_value": "True",
+              "group_name": "Gas phase D2O",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-367",
+              "y_value": 0.08419315466455589,
+              "subset_key": "Gas phase D2O||True",
+              "subset_value": "True",
+              "group_name": "Gas phase D2O",
+              "color": "green"
+            }
+          ]
+        }
+      }
+    },
+    "O2 max rate (polyfit, gas phase)": {
+      "unit": "Rate / umol L^-1 s^-1",
+      "data": {
+        "False": {
+          "min": 0.11310818451408172,
+          "max": 0.12448437119468281,
+          "mean": 0.11879627785438227,
+          "median": 0.11879627785438227,
+          "std": 0.005688093340300543,
+          "count": 2,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-363",
+              "y_value": 0.12448437119468281,
+              "subset_key": "Gas phase||Reference",
+              "subset_value": "Reference",
+              "group_name": "Gas phase",
+              "color": "orange"
+            },
+            {
+              "experiment_name": "NB-364",
+              "y_value": 0.11310818451408172,
+              "subset_key": "Gas phase||Reference",
+              "subset_value": "Reference",
+              "group_name": "Gas phase",
+              "color": "blue"
+            }
+          ]
+        },
+        "True": {
+          "min": 0.0437066601620586,
+          "max": 0.043906200973121944,
+          "mean": 0.043806430567590274,
+          "median": 0.043806430567590274,
+          "std": 9.977040553167324e-05,
+          "count": 2,
+          "experiments_at_this_x_value": [
+            {
+              "experiment_name": "NB-366",
+              "y_value": 0.043906200973121944,
+              "subset_key": "Gas phase D2O||True",
+              "subset_value": "True",
+              "group_name": "Gas phase D2O",
+              "color": "black"
+            },
+            {
+              "experiment_name": "NB-367",
+              "y_value": 0.0437066601620586,
+              "subset_key": "Gas phase D2O||True",
+              "subset_value": "True",
+              "group_name": "Gas phase D2O",
+              "color": "green"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "metadata": {
+    "export_timestamp": "2025-12-04T12:56:49.229014",
+    "h5_filename": "251204_processed_O2_H2_data.h5",
+    "x_axis": {
+      "mode": "D2O",
+      "label": "D2O",
+      "type": "categorical"
+    },
+    "selected_analysis_results": [
+      "H2 max rate (polyfit, gas phase)",
+      "O2 max rate (polyfit, gas phase)"
+    ],
+    "selected_subsets": {
+      "Gas phase||Reference": {
+        "experiments": [
+          "NB-363",
+          "NB-364"
+        ],
+        "count": 2
+      },
+      "Gas phase D2O||True": {
+        "experiments": [
+          "NB-366",
+          "NB-367"
+        ],
+        "count": 2
+      }
+    },
+    "total_experiments_displayed": 4,
+    "total_data_points": 8
+  }
+}

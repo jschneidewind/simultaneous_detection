@@ -15,7 +15,7 @@ from pyKES.database.database_experiments import ExperimentalDataset
 
 
 def main():
-    dataset = ExperimentalDataset.load_from_hdf5('data/251130_processed_O2_H2_data_with_fits.h5')
+    dataset = ExperimentalDataset.load_from_hdf5('data/251204_processed_O2_H2_data_with_fits.h5')
 
     fig, ax = plt.subplots(2, 1, figsize=(7, 7))
     fig.tight_layout(pad=2.0)
@@ -27,11 +27,11 @@ def main():
     H2_gas_experimental = dataset.experiments['NB-312'].processed_data['[H2-g]_experimental']
     H2_gas_fit = dataset.experiments['NB-312'].processed_data['[H2-g]_fit']
 
-    O2_aq_experimental = dataset.experiments['NB-353'].processed_data['[O2-aq]_experimental']
-    O2_aq_fit = dataset.experiments['NB-353'].processed_data['[O2-aq]_fit']
+    O2_aq_experimental = dataset.experiments['NB-353'].processed_data['[O2-detected]_experimental']
+    O2_aq_fit = dataset.experiments['NB-353'].processed_data['[O2-detected]_fit']
 
-    H2_aq_experimental = dataset.experiments['NB-353'].processed_data['[H2-aq]_experimental']
-    H2_aq_fit = dataset.experiments['NB-353'].processed_data['[H2-aq]_fit']
+    H2_aq_experimental = dataset.experiments['NB-353'].processed_data['[H2-detected]_experimental']
+    H2_aq_fit = dataset.experiments['NB-353'].processed_data['[H2-detected]_fit']
 
     ax[0].plot(H2_aq_experimental['x'], H2_aq_experimental['y'],
         '.', color = 'gray', label = 'Data H$_2$')
@@ -98,11 +98,11 @@ def main():
     ax1_twin.set_ylabel('H$_2$/O$_2$ Ratio', color='darkgreen')
     ax1_twin.tick_params(axis='y', labelcolor='darkgreen')
     
-    # Combine legends from both axes
-    lines_1, labels_1 = ax[1].get_legend_handles_labels()
-    lines_1_twin, labels_1_twin = ax1_twin.get_legend_handles_labels()
-    ax[1].legend(lines_1 + lines_1_twin, labels_1 + labels_1_twin, 
-                 loc='center left', bbox_to_anchor=(1.25, 0.34))
+    # # Combine legends from both axes
+    # lines_1, labels_1 = ax[1].get_legend_handles_labels()
+    # lines_1_twin, labels_1_twin = ax1_twin.get_legend_handles_labels()
+    # ax[1].legend(lines_1 + lines_1_twin, labels_1 + labels_1_twin, 
+    #              loc='center left', bbox_to_anchor=(1.25, 0.34))
     
     ax[1].set_title('Gas phase', fontweight='bold')
     ax[1].set_xlabel('Time / s')
@@ -110,8 +110,8 @@ def main():
 
 
     img = mpimg.imread('figures/Reaction_Scheme_Liquid_Gas.png')
-    imagebox = OffsetImage(img, zoom=0.1) 
-    ab = AnnotationBbox(imagebox, (1.71, 1.2), frameon=True, 
+    imagebox = OffsetImage(img, zoom=0.134) 
+    ab = AnnotationBbox(imagebox, (1.625, 0.75), frameon=True, 
                         bboxprops=dict(boxstyle='round,pad=0.5', edgecolor = 'lightgrey'),
                         xycoords=ax[1].transAxes)
     ax[1].add_artist(ab)
@@ -120,9 +120,12 @@ def main():
 
     ax[0].text(-0.23, 1.0, 'A',transform=ax[0].transAxes,fontsize=22, fontweight='bold')
     ax[1].text(-0.23, 1.0, 'B',transform=ax[1].transAxes,fontsize=22, fontweight='bold')
-    ax[1].text(1.3, 1.57, 'C',transform=ax[1].transAxes,fontsize=22, fontweight='bold')
+    ax[1].text(1.27, 1.46, 'C',transform=ax[1].transAxes,fontsize=22, fontweight='bold')
 
-    #fig.savefig('Figures/Liquid_Gasphase_Model.pdf', dpi = 500)
+    fig.savefig('Figures/Liquid_Gasphase_Model.png', dpi = 500)
+
+    import pprint as pp
+    pp.pprint(dataset.processing_parameters['fitting_model']['optimized_rate_constants'])
 
     plt.show()
     

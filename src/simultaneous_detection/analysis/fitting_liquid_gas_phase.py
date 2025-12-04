@@ -19,13 +19,22 @@ def main():
                            '[H2-aq] > [H2-g], k3 ; factor1',
                             ])
                                                 
-    model.experiments = [dataset.experiments['NB-312'],
+    model.experiments = [dataset.experiments['NB-363'],
                          (dataset.experiments['NB-353'], 1)]
     
     model.rate_constants_to_optimize = {'k1': (0, 1),
                                         'k2': (0, 1),
                                         'k3': (0, 1),
                                         }
+
+    # model.rate_constants_to_optimize = {'k2': (0, 1),
+    #                                     }
+    
+    # model.fixed_rate_constants = {'k1': 6.0e-9,
+    #                               'k3': 0.0073,
+    #                               }
+    
+
 
     model.other_multipliers = {
         'factor1': 1.68 # Based on Henry's constant ratio
@@ -56,10 +65,142 @@ def main():
 
     model.visualize_optimization_results()
 
-    model.add_fit_results_to_database(dataset)
-    model.database.save_to_hdf5('data/251130_processed_O2_H2_data_with_fits.h5')
+    #model.add_fit_results_to_database(dataset)
+    #model.database.save_to_hdf5('data/251130_processed_O2_H2_data_with_fits_diffusion_coefficient.h5')
 
     plt.show()
+
+def testing_ratio():
+
+    dataset = ExperimentalDataset.load_from_hdf5('data/251130_processed_O2_H2_data.h5')
+
+    model = Fitting_Model(['[H2O] > [H2O-int], k1',
+                           '[H2O-int] > 2 [H2-aq] + [O2-aq], k2',
+                           '[O2-aq] > [O2-g], k3',
+                           '[H2-aq] > [H2-g], k3 ; factor1',
+                            ])
+                                                
+    model.experiments = [dataset.experiments['NB-312'],
+                         (dataset.experiments['NB-353'], 1)]
+    
+    model.rate_constants_to_optimize = {'k1': (0, 1),
+                                        'k2': (0, 1),
+                                        'k3': (0, 1),
+                                        }
+
+    model.data_to_be_fitted = {
+                '[O2-aq]': {'x': 'processed_data/common_time_reaction',
+                            'y': 'processed_data/O2_data_aligned'},
+                '[H2-aq]': {'x': 'processed_data/common_time_reaction',
+                            'y': 'processed_data/H2_data_aligned'},
+                 '[O2-g]': {'x': 'processed_data/common_time_reaction',
+                           'y': 'processed_data/O2_gas_data_aligned'},
+                 '[H2-g]': {'x': 'processed_data/common_time_reaction',
+                           'y': 'processed_data/H2_gas_data_aligned'},
+                            }
+
+    model.initial_conditions = {
+        '[H2O]': 55 * 1e6,  # Convert from mol/L to μmol/L
+    }
+    
+    model.times = {
+        'times': 'processed_data/common_time_reaction',
+    }
+
+    model.loss_function = square_loss_time_series_normalized
+
+
+    ratios = np.linspace(0.5, 5.0, 20)
+
+    fun_values = []
+    
+    for value in ratios:
+        model.other_multipliers = {
+            'factor1': value # Based on Henry's constant ratio
+        }
+
+        model.optimize()
+
+        fun_values.append(model.result.fun)
+
+    plt.plot(ratios, fun_values, 'o-')
+    plt.show()
+
+    #model.visualize_optimization_results()
+
+def liquid_phase_sensor_diffusion_model():
+
+    dataset = ExperimentalDataset.load_from_hdf5('data/251204_processed_O2_H2_data.h5')
+
+
+    
+    model = Fitting_Model(['[H2O] > 2 [H2-aq] + [O2-aq], k1',
+                           '[H2-aq] > [H2-detected], k2',
+                           '[O2-aq] > [O2-detected], k3',
+                           '[O2-detected] > [O2-g], k4',
+                           '[H2-detected] > [H2-g], k4 ; factor1',
+                            ])
+                                                
+    model.experiments = [dataset.experiments['NB-312'],
+                         (dataset.experiments['NB-353'], 1)]
+    
+    # model.rate_constants_to_optimize = {'k0': (1e-10,1e-8),
+    #                                     'k1': (1e-3, 1e-2),
+    #                                     'k4': (1e-3, 1e-2),
+    #                                     }
+    
+    # model.fixed_rate_constants = {'k2': 1000,
+    #                               'k3': 1000,
+    #                               }
+
+    model.rate_constants_to_optimize = {'k1': (0, 1),
+                                        'k2': (0, 1),
+                                        'k3': (0, 1),
+                                        'k4': (0, 1),
+                                        }
+
+    # model.rate_constants_to_optimize = {'k1': (0, 1),
+    #                                     'k2': (0, 1),
+    #                                     'k3': (0, 1),
+
+    #                                     }
+
+    model.other_multipliers = {
+        'factor1': 1.68 # Based on Henry's constant ratio
+    }
+
+    model.data_to_be_fitted = {
+                '[O2-detected]': {'x': 'processed_data/common_time_reaction',
+                            'y': 'processed_data/O2_data_aligned'},
+                '[H2-detected]': {'x': 'processed_data/common_time_reaction',
+                            'y': 'processed_data/H2_data_aligned'},
+                '[O2-g]': {'x': 'processed_data/common_time_reaction',
+                           'y': 'processed_data/O2_gas_data_aligned'},
+                '[H2-g]': {'x': 'processed_data/common_time_reaction',
+                           'y': 'processed_data/H2_gas_data_aligned'},
+                            }
+
+    model.initial_conditions = {
+        '[H2O]': 55 * 1e6,  # Convert from mol/L to μmol/L
+    }
+    
+    model.times = {
+        'times': 'processed_data/common_time_reaction',
+    }
+
+    model.loss_function = square_loss_time_series_normalized
+
+    model.optimize()
+
+    model.visualize_optimization_results()
+
+    model.add_fit_results_to_database(dataset)
+    model.database.save_to_hdf5('data/251204_processed_O2_H2_data_with_fits.h5')
+
+    plt.show()
+
+
+
 
 if __name__ == '__main__':
 
@@ -69,4 +210,14 @@ if __name__ == '__main__':
     # {'k1': np.float64(4.15115769536456e-09),
     #  'k2': np.float64(0.0022685452918629334),
     #  'k3': np.float64(0.005697542035868641)}
-    main()
+
+    # Result 251203-17:04
+    # fun: 0.056592168731012985
+    #  {'k1': np.float64(4.351966509386074e-09),
+    #  'k2': np.float64(0.0018510759426746959),
+    #  'k3': np.float64(0.004499313289321072)}
+
+
+    #main()
+    #testing_ratio()
+    liquid_phase_sensor_diffusion_model()

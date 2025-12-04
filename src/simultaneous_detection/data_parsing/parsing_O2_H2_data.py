@@ -40,7 +40,7 @@ def raw_data_reading_function(experiment_name, metadata_dict):
     file_H2 = f'data/H2_data/{metadata_dict["File name H2"]}'
     file_O2 = f'data/O2_data/{metadata_dict["File name O2"]}'
 
-    if metadata_dict['group'] == 'Gas phase':
+    if 'Gas phase' in metadata_dict['group']:
         raw_data_H2 = reading_H2_file(file_H2, mode = 'gas')
         raw_data_O2 = reading_O2_file(file_O2, channel = 4)
 
@@ -54,39 +54,61 @@ def processing_function(raw_data_dict, metadata_dict):
     '''
     '''
 
-    if metadata_dict['group'] == 'Gas phase':
+    if 'Gas phase' in metadata_dict['group']:
         prefix_H2 = 'H2_gas'
         prefix_O2 = 'O2_gas'
         raw_data_H2_string = 'H2_Pa'
         raw_data_O2_string = 'O2_data'
+
+        processed_H2 = processing_data(
+            time = raw_data_dict['H2_time_s'],
+            data = raw_data_dict[raw_data_H2_string],
+            start = metadata_dict['Unisense Irradiation start [s]'],
+            end = metadata_dict['Unisense Irradiation end [s]'],
+            prefix = prefix_H2,
+            liquid_phase_volume = metadata_dict['Liquid phase volume [mL]'],
+            gas_phase_volume = metadata_dict['Gas phase volume [mL]'],
+            **PROCESSING_PARAMETERS['H2_processing_parameters_gas_phase']
+        )
+
+        processed_O2 = processing_data(
+            time = raw_data_dict['O2_time_s'],
+            data = raw_data_dict[raw_data_O2_string],
+            start = metadata_dict['Pyroscience Irradiation start [s]'],
+            end = metadata_dict['Pyroscience Irradiation end [s]'],
+            prefix = prefix_O2,
+            liquid_phase_volume = metadata_dict['Liquid phase volume [mL]'],
+            gas_phase_volume = metadata_dict['Gas phase volume [mL]'],
+            **PROCESSING_PARAMETERS['O2_processing_parameters_gas_phase']
+        )
+
     else:
         prefix_H2 = 'H2'
         prefix_O2 = 'O2'
         raw_data_H2_string = 'H2_umol_L'
         raw_data_O2_string = 'O2_data'
 
+        processed_H2 = processing_data(
+            time = raw_data_dict['H2_time_s'],
+            data = raw_data_dict[raw_data_H2_string],
+            start = metadata_dict['Unisense Irradiation start [s]'],
+            end = metadata_dict['Unisense Irradiation end [s]'],
+            prefix = prefix_H2,
+            liquid_phase_volume = metadata_dict['Liquid phase volume [mL]'],
+            gas_phase_volume = metadata_dict['Gas phase volume [mL]'],
+            **PROCESSING_PARAMETERS['H2_processing_parameters']
+        )
 
-    processed_H2 = processing_data(
-        time = raw_data_dict['H2_time_s'],
-        data = raw_data_dict[raw_data_H2_string],
-        start = metadata_dict['Unisense Irradiation start [s]'],
-        end = metadata_dict['Unisense Irradiation end [s]'],
-        prefix = prefix_H2,
-        liquid_phase_volume = metadata_dict['Liquid phase volume [mL]'],
-        gas_phase_volume = metadata_dict['Gas phase volume [mL]'],
-        **PROCESSING_PARAMETERS['H2_processing_parameters']
-    )
-
-    processed_O2 = processing_data(
-        time = raw_data_dict['O2_time_s'],
-        data = raw_data_dict[raw_data_O2_string],
-        start = metadata_dict['Pyroscience Irradiation start [s]'],
-        end = metadata_dict['Pyroscience Irradiation end [s]'],
-        prefix = prefix_O2,
-        liquid_phase_volume = metadata_dict['Liquid phase volume [mL]'],
-        gas_phase_volume = metadata_dict['Gas phase volume [mL]'],
-        **PROCESSING_PARAMETERS['O2_processing_parameters']
-    )
+        processed_O2 = processing_data(
+            time = raw_data_dict['O2_time_s'],
+            data = raw_data_dict[raw_data_O2_string],
+            start = metadata_dict['Pyroscience Irradiation start [s]'],
+            end = metadata_dict['Pyroscience Irradiation end [s]'],
+            prefix = prefix_O2,
+            liquid_phase_volume = metadata_dict['Liquid phase volume [mL]'],
+            gas_phase_volume = metadata_dict['Gas phase volume [mL]'],
+            **PROCESSING_PARAMETERS['O2_processing_parameters']
+        )
 
     processed_data_dict = processed_H2 | processed_O2
 
@@ -114,7 +136,7 @@ def processing_function(raw_data_dict, metadata_dict):
             processed_data = processed_data_dict
         )
     
-    if metadata_dict['group'] != 'Gas phase':
+    if 'Gas phase' not in metadata_dict['group']:
 
         processed_data_dict = fitting_wrapper(
             experiment,
@@ -122,6 +144,16 @@ def processing_function(raw_data_dict, metadata_dict):
             PROCESSING_PARAMETERS['fitting_parameters_mapping'],
             processed_data_dict,
             common_time,
+            general_prefix = 'Fit'
+        )
+
+        processed_data_dict = fitting_wrapper(
+            experiment,
+            PROCESSING_PARAMETERS['fitting_parameters_fixed'],
+            PROCESSING_PARAMETERS['fitting_parameters_fixed_mapping'],
+            processed_data_dict,
+            common_time,
+            general_prefix = 'Fit_fixed'
         )
 
         processed_data_dict = fitting_wrapper(
@@ -130,7 +162,8 @@ def processing_function(raw_data_dict, metadata_dict):
             PROCESSING_PARAMETERS['fitting_parameters_flexible_H2_mapping'],
             processed_data_dict,
             common_time,
-            print_results = True
+            print_results = True,
+            general_prefix = 'Fit_Flexible_H2'
         )
 
         processed_data_dict = fitting_wrapper(
@@ -139,7 +172,8 @@ def processing_function(raw_data_dict, metadata_dict):
             PROCESSING_PARAMETERS['fitting_parameters_flexible_O2_mapping'],
             processed_data_dict,
             common_time,
-            print_results = True
+            print_results = True,
+            general_prefix = 'Fit_Flexible_O2'
         )
 
     return processed_data_dict
@@ -232,7 +266,7 @@ def generate_dataset():
     """
 
     overview_df = pd.read_excel(
-        'data/251126_O2_H2_Experiment_Overview.xlsx',
+        'data/251204_O2_H2_Experiment_Overview.xlsx',
         sheet_name='Sheet1',
         dtype={'active': str,
                'D2O': str}  # Force 'active' and 'D2O' columns to be read as strings
@@ -253,7 +287,7 @@ def generate_dataset():
         overview_df_based_processing = True,
     )
 
-    dataset.save_to_hdf5('data/251130_processed_O2_H2_data.h5')
+    dataset.save_to_hdf5('data/251204_processed_O2_H2_data_gas_D2O_regrouped.h5')
 
 def debugging_function():
 

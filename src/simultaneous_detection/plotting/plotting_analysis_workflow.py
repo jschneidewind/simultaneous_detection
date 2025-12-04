@@ -29,7 +29,8 @@ def main():
 
     PLOTTING_DATA = resolve_experiment_attributes(
         PLOTTING_INSTRUCTIONS['time_series_instructions'],
-        experiment
+        experiment,
+        mode = 'permissible'
     )
 
     ### Plot A
@@ -152,12 +153,10 @@ def main():
          fontsize=12, fontweight='bold', 
          ha='left', va='center')
     
-    fig.text(x=0.13, y=0.335, s='3. Smoothing', 
+    fig.text(x=0.07, y=0.335, s='3. Differentiation', 
          fontsize=12, fontweight='bold', 
          ha='left', va='center')
-    fig.text(x=0.55, y=0.335, s='4. Differentiation', 
-         fontsize=12, fontweight='bold', 
-         ha='left', va='center')
+
     
     arrow = patches.FancyArrow(
         x=0.45, y=0.35,           # Start position

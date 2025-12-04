@@ -258,7 +258,7 @@ def plot_experiment_group(
 
 def main():
     # Example usage
-    dataset = ExperimentalDataset.load_from_hdf5('data/251130_processed_O2_H2_data.h5')
+    dataset = ExperimentalDataset.load_from_hdf5('data/251204_processed_O2_H2_data.h5')
     
     # Define which data series to plot
     plotting_instructions = {
@@ -285,8 +285,8 @@ def main():
     #     figsize_per_row= (8, 3),
     #     subplots_adjustments={'top': 0.8},
     #     ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
-    #     save_figure=False,
-    #     save_path='figures/Intensity_Screening.pdf',
+    #     save_figure=True,
+    #     save_path='figures/Intensity_Screening.png',
     #     show_figure=True,
     # )
 
@@ -303,29 +303,29 @@ def main():
     #     figsize_per_row= (8, 4),
     #     subplots_adjustments={'top': 0.7},
     #     legend_location=(0.5, 0.9),
-    #     save_figure=False,
-    #     save_path='figures/Loading_Screening.pdf',
+    #     save_figure=True,
+    #     save_path='figures/Loading_Screening.png',
     #     show_figure=True,
     # )
 
-    fig, axes = plot_experiment_group(
-        dataset=dataset,
-        experiment_group='Temperature',
-        figure_title='Screening of reaction temperature',
-        plotting_instructions=plotting_instructions,
-        plotting_styles=plotting_styles,
-        viridis_range=(0.2, 0.8),
-        subplot_title_format="{value} °C",
-        ylim= (-5, 60),
-        xlabel="Time / s",
-        ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
-        subplots_adjustments={'top': 0.7},
-        legend_location=(0.5, 0.9),
-        figsize_per_row= (8, 4),
-        save_figure=True,
-        save_path='figures/Temperature_Screening.pdf',
-        show_figure=True,
-    )
+    # fig, axes = plot_experiment_group(
+    #     dataset=dataset,
+    #     experiment_group='Temperature',
+    #     figure_title='Screening of reaction temperature',
+    #     plotting_instructions=plotting_instructions,
+    #     plotting_styles=plotting_styles,
+    #     viridis_range=(0.2, 0.8),
+    #     subplot_title_format="{value} °C",
+    #     ylim= (-5, 60),
+    #     xlabel="Time / s",
+    #     ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
+    #     subplots_adjustments={'top': 0.7},
+    #     legend_location=(0.5, 0.9),
+    #     figsize_per_row= (8, 4),
+    #     save_figure=True,
+    #     save_path='figures/Temperature_Screening.png',
+    #     show_figure=True,
+    # )
     
     # fig, axes = plot_experiment_group(
     #     dataset=dataset,
@@ -339,8 +339,8 @@ def main():
     #     subplots_adjustments={'top': 0.8},
     #     legend_location=(0.54, 1.0),
     #     figsize_per_row= (5, 5),
-    #     save_figure=False,
-    #     save_path='figures/Reference_Conditions.pdf',
+    #     save_figure=True,
+    #     save_path='figures/Reference_Conditions.png',
     #     show_figure=True,
     # )
 
@@ -357,9 +357,52 @@ def main():
     #     legend_location=(0.54, 1.0),
     #     figsize_per_row= (5, 5),
     #     save_figure=True,
-    #     save_path='figures/D2O_Conditions.pdf',
+    #     save_path='figures/D2O_Conditions.png',
     #     show_figure=True,
     # )
+
+    plotting_instructions_gas_phase = {
+        'Reaction (H$_2$)': PLOTTING_INSTRUCTIONS['time_series_instructions']['Reaction (H2, gas phase)'],
+        'Reaction (O$_2$)': PLOTTING_INSTRUCTIONS['time_series_instructions']['Reaction (O2, gas phase)'],
+    }
+
+    fig, axes = plot_experiment_group(
+        dataset=dataset,
+        experiment_group='Gas phase',
+        plotting_instructions=plotting_instructions_gas_phase,
+        plotting_styles=plotting_styles,
+        viridis_range=(0.2, 0.8),
+        subplot_title_format="",
+        xlabel="Time / s",
+        ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
+        subplots_adjustments={'top': 0.8},
+        legend_location=(0.54, 1.0),
+        figsize_per_row= (5, 5),
+        ylim = (-30, 720),
+        save_figure=True,
+        save_path='figures/Gas_Phase_Reference_Conditions.png',
+        show_figure=True,
+    )
+
+    # fig, axes = plot_experiment_group(
+    #     dataset=dataset,
+    #     experiment_group='Gas phase D2O',
+    #     plotting_instructions=plotting_instructions_gas_phase,
+    #     plotting_styles=plotting_styles,
+    #     viridis_range=(0.2, 0.8),
+    #     subplot_title_format="",
+    #     xlabel="Time / s",
+    #     ylabel=r"Concentration / $\mu$mol$\cdot$L$^{-1}$",
+    #     subplots_adjustments={'top': 0.8},
+    #     legend_location=(0.54, 1.0),
+    #     figsize_per_row= (5, 5),
+    #     ylim = (-30, 720),
+    #     save_figure=True,
+    #     save_path='figures/Gas_Phase_D2O.png',
+    #     show_figure=True,
+    # )
+
+
 
 
 
