@@ -1,5 +1,7 @@
 # Simultaneous detection O2/H2
 
+This repository contains the code for the project "Insights into overall photocatalytic water splitting through simultaneous in situ H2 and O2 measurements". It requires the library "pyKES", which is available at https://github.com/jschneidewind/pyKES. 
+
 ## Workflow
 
 1. Completing overview Excel sheet, selecting active/inactive experiments
@@ -11,7 +13,6 @@
 7. Creating workflow figure with dataset
 8. Creating results figure with downloaded JSON files
 9. Creating data plots using dataset
-
 
 ## Contributing
 
