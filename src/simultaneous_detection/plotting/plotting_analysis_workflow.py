@@ -39,7 +39,7 @@ def main():
     irradiation_end = experiment.metadata['Unisense Irradiation end [s]']
 
     ax[0].plot(PLOTTING_DATA['Raw (H2)']['x'], PLOTTING_DATA['Raw (H2)']['y'],
-        '.', color = 'gray', label = 'Raw data H$_2$')    
+        'D', color = 'gray', label = 'Raw data H$_2$', markersize = 3)    
 
     ax[0].plot(PLOTTING_DATA['Raw (O2)']['x'], PLOTTING_DATA['Raw (O2)']['y'],
         '.', color = 'black', label = 'Raw data O$_2$')
@@ -92,7 +92,7 @@ def main():
     ### Plot B
 
     ax[1].plot(PLOTTING_DATA['Reaction (H2)']['x'], PLOTTING_DATA['Reaction (H2)']['y'],   
-        '.', color = 'gray', label = 'Data H$_2$')
+        'D', color = 'gray', label = 'Data H$_2$', markersize = 3)
 
     ax[1].plot(PLOTTING_DATA['Reaction (O2)']['x'], PLOTTING_DATA['Reaction (O2)']['y'],   
         '.', color = 'black', label = 'Data O$_2$')
@@ -113,7 +113,7 @@ def main():
     ### Plot C
 
     ax[2].plot(PLOTTING_DATA['Rate (H2)']['x'], PLOTTING_DATA['Rate (H2)']['y'],
-        '.', color = 'gray', label = 'Rate H$_2$')
+        'D', color = 'gray', label = 'Rate H$_2$', markersize = 3)
     
     ax[2].plot(PLOTTING_DATA['Rate (O2)']['x'], PLOTTING_DATA['Rate (O2)']['y'],
         '.', color = 'black', label = 'Rate O$_2$')
@@ -129,7 +129,7 @@ def main():
 
     ax[2].plot(PLOTTING_DATA['Rate poly fit (H2)']['x'][max_rate_idx_H2],
                PLOTTING_DATA['Rate poly fit (H2)']['y'][max_rate_idx_H2],
-               'o', markersize = 10, label = 'Max. rate H$_2$', color = 'darkorange')
+               'D', markersize = 8, label = 'Max. rate H$_2$', color = 'darkorange')
     
     ax[2].plot(PLOTTING_DATA['Rate poly fit (O2)']['x'][max_rate_idx_O2],
                PLOTTING_DATA['Rate poly fit (O2)']['y'][max_rate_idx_O2],
@@ -142,9 +142,9 @@ def main():
     ax[2].set_xlabel('Time / s')
     ax[2].set_ylabel('Rate / μmol·L$^{-1}$·s$^{-1}$')
 
-    ax[0].text(-0.37, 0.95, 'A',transform=ax[0].transAxes,fontsize=22, fontweight='bold')
-    ax[1].text(-0.37, 0.95, 'B',transform=ax[1].transAxes,fontsize=22, fontweight='bold')
-    ax[2].text(-0.37, 0.95, 'C',transform=ax[2].transAxes,fontsize=22, fontweight='bold')
+    ax[0].text(-0.37, 0.95, 'A',transform=ax[0].transAxes,fontsize=18, fontweight='bold')
+    ax[1].text(-0.37, 0.95, 'B',transform=ax[1].transAxes,fontsize=18, fontweight='bold')
+    ax[2].text(-0.37, 0.95, 'C',transform=ax[2].transAxes,fontsize=18, fontweight='bold')
 
     fig.text(x=0.26, y=0.675, s='1. Baseline correction', 
          fontsize=12, fontweight='bold', 

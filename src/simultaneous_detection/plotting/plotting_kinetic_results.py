@@ -34,37 +34,52 @@ def main():
                    'O2 max rate (polyfit, gas phase)': 'O$_2$'}
     
     viridis = plt.cm.viridis
-    colors = [viridis(i) for i in np.linspace(0, 0.85, 4)]
+    colors = [viridis(i) for i in np.linspace(0, 0.75, 4)]
 
     # Create color dictionaries for each plot
     # Each plot uses one color from 'colors', with H2 as a lighter hue
     colors_dict_0 = {
         'O2 max rate (polyfit)': colors[0],
-        'H2 max rate (polyfit)': lighten_color(colors[0], amount=0.3)
+        'H2 max rate (polyfit)': lighten_color(colors[0], amount=0.6)
     }
     colors_dict_1 = {
         'O2 max rate (polyfit)': colors[1],
-        'H2 max rate (polyfit)': lighten_color(colors[1], amount=0.3)
+        'H2 max rate (polyfit)': lighten_color(colors[1], amount=0.6)
     }
     colors_dict_2 = {
         'O2 max rate (polyfit)': colors[2],
-        'H2 max rate (polyfit)': lighten_color(colors[2], amount=0.3)
+        'H2 max rate (polyfit)': lighten_color(colors[2], amount=0.6)
     }
     colors_dict_3 = {
         'O2 max rate (polyfit)': colors[3],
-        'H2 max rate (polyfit)': lighten_color(colors[3], amount=0.3)
+        'H2 max rate (polyfit)': lighten_color(colors[3], amount=0.6)
     }
 
     colors_dict_3_gas_phase = {
         'O2 max rate (polyfit, gas phase)': colors[3],
-        'H2 max rate (polyfit, gas phase)': lighten_color(colors[3], amount=0.3)
+        'H2 max rate (polyfit, gas phase)': lighten_color(colors[3], amount=0.6)
+    }
+
+    markers_dict = {
+        'O2 max rate (polyfit)': 'o',
+        'H2 max rate (polyfit)': 'D',
+        'O2 max rate (polyfit, gas phase)': 'o',
+        'H2 max rate (polyfit, gas phase)': 'D'
+    }
+
+    marker_size_dict = {
+        'O2 max rate (polyfit)': 8,
+        'H2 max rate (polyfit)': 6,
+        'O2 max rate (polyfit, gas phase)': 8,
+        'H2 max rate (polyfit, gas phase)': 6
     }
 
     plot_analysis_results(
         'data/plotting_data/Irra_analysis_results_20251127_182340.json',
         ax = ax[0][0],
         linestyles= "-",
-        markersize = 8,
+        marker = markers_dict,
+        markersize = marker_size_dict,
         xlabel = 'Irradiance / mW·cm$^{-2}$',
         ylabel = y_axis_label,
         result_labels = data_labels,
@@ -75,7 +90,8 @@ def main():
         'data/plotting_data/Temp_analysis_results_20251127_182426.json',
         ax = ax[0][1],
         linestyles= "-",
-        markersize = 8,
+        marker = markers_dict,
+        markersize = marker_size_dict,
         xlabel = 'Temperature / °C',
         ylabel = y_axis_label,
         result_labels = data_labels,
@@ -86,7 +102,8 @@ def main():
         'data/plotting_data/Cata_analysis_results_20251127_182412.json',
         ax = ax[1][0],
         linestyles= "-",
-        markersize = 8,
+        marker = markers_dict,
+        markersize = marker_size_dict,
         xlabel = 'Co-catalyst loading / wt. fraction Rh/Cr',
         ylabel = y_axis_label,
         result_labels = data_labels,
@@ -97,7 +114,8 @@ def main():
     plot_analysis_results(
         'data/plotting_data/D2O_analysis_results_20251127_182353.json',
         ax = ax_d1,  # Use the first of the two smaller subplots
-        markersize = 8,
+        marker = markers_dict,
+        markersize = marker_size_dict,
         xlabel = 'D$_2$O',
         ylabel = y_axis_label,
         result_labels = data_labels,
@@ -107,7 +125,8 @@ def main():
     plot_analysis_results(
         'data/plotting_data/D2O_analysis_results_20251204_125649.json',
         ax = ax_d2,  # Use the first of the two smaller subplots
-        markersize = 8,
+        marker = markers_dict,
+        markersize = marker_size_dict,
         xlabel = 'D$_2$O',
         ylabel = y_axis_label,
         result_labels = data_labels_gas_phase,
@@ -153,11 +172,11 @@ def main():
                
 
 
-    ax[0][0].text(-0.23, 1.05, 'A',transform=ax[0][0].transAxes,fontsize=22, fontweight='bold')
-    ax[0][1].text(-0.23, 1.05, 'B',transform=ax[0][1].transAxes,fontsize=22, fontweight='bold')
-    ax[1][0].text(-0.23, 1.05, 'C',transform=ax[1][0].transAxes,fontsize=22, fontweight='bold')
-    ax_d1.text(-0.63, 1.05, 'D',transform=ax_d1.transAxes,fontsize=22, fontweight='bold')
-    ax_d2.text(-0.63, 1.05, 'E',transform=ax_d2.transAxes,fontsize=22, fontweight='bold')
+    ax[0][0].text(-0.23, 1.05, 'A',transform=ax[0][0].transAxes,fontsize=18, fontweight='bold')
+    ax[0][1].text(-0.23, 1.05, 'B',transform=ax[0][1].transAxes,fontsize=18, fontweight='bold')
+    ax[1][0].text(-0.23, 1.05, 'C',transform=ax[1][0].transAxes,fontsize=18, fontweight='bold')
+    ax_d1.text(-0.63, 1.05, 'D',transform=ax_d1.transAxes,fontsize=18, fontweight='bold')
+    ax_d2.text(-0.63, 1.05, 'E',transform=ax_d2.transAxes,fontsize=18, fontweight='bold')
 
     fig.savefig('Figures/Kinetic_Results.pdf', dpi = 500)
 
